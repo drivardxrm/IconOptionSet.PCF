@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="XrmVision" constructor="IconOptionset" version="1.0.2" display-name-key="Icon Optionset" description-key="Display an optionset with Office UI Fabric icons (5 values max)" control-type="standard">
+    <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
+    <property name="optionset" display-name-key="Primary Optionset" description-key="Select Optionset (5 values max)" of-type="OptionSet" usage="bound" required="true" />
+    <property name="icon1" display-name-key="Icon #1" description-key="Icon #1, list here  https://developer.microsoft.com/en-us/fabric#/styles/web/icons#fabric-icons-tool" of-type="SingleLine.Text" usage="input" required="false" default-value="DislikeSolid"/>
+    <property name="icon2" display-name-key="Icon #2" description-key="Icon #2, list here  https://developer.microsoft.com/en-us/fabric#/styles/web/icons#fabric-icons-tool" of-type="SingleLine.Text" usage="input" required="false" default-value="DislikeSolid"/>
+    <property name="icon3" display-name-key="Icon #3" description-key="Icon #3, list here  https://developer.microsoft.com/en-us/fabric#/styles/web/icons#fabric-icons-tool" of-type="SingleLine.Text" usage="input" required="false" default-value="DislikeSolid"/>
+    <property name="icon4" display-name-key="Icon #4" description-key="Icon #4, list here  https://developer.microsoft.com/en-us/fabric#/styles/web/icons#fabric-icons-tool" of-type="SingleLine.Text" usage="input" required="false" default-value="DislikeSolid"/>
+    <property name="icon5" display-name-key="Icon #5" description-key="Icon #5, list here  https://developer.microsoft.com/en-us/fabric#/styles/web/icons#fabric-icons-tool" of-type="SingleLine.Text" usage="input" required="false" default-value="DislikeSolid"/>
+    <property name="selectedcolor" display-name-key="Selected icon color" description-key="Selected icon color" of-type="SingleLine.Text" usage="input" required="false" default-value="#005A9E"/>
+    
+    <!-- 
+      Property node's of-type attribute can be of-type-group attribute. 
+      Example:
+      <type-group name="numbers">
+        <type>Whole.None</type>
+        <type>Currency</type>
+        <type>FP</type>
+        <type>Decimal</type>
+      </type-group>
+      <property name="sampleProperty" display-name-key="Property_Display_Key" description-key="Property_Desc_Key" of-type-group="numbers" usage="bound" required="true" />
+    -->
+    <resources>
+      <code path="index.ts" order="1"/>
+      <!-- UNCOMMENT TO ADD MORE RESOURCES
+      <css path="css/IconOptionset.css" order="1" />
+      <resx path="strings/IconOptionset.1033.resx" version="1.0.0" />
+      -->
+    </resources>
+    <!-- UNCOMMENT TO ENABLE THE SPECIFIED API
+    <feature-usage>
+      <uses-feature name="Device.captureAudio" required="true" />
+      <uses-feature name="Device.captureImage" required="true" />
+      <uses-feature name="Device.captureVideo" required="true" />
+      <uses-feature name="Device.getBarcodeValue" required="true" />
+      <uses-feature name="Device.getCurrentPosition" required="true" />
+      <uses-feature name="Device.pickFile" required="true" />
+      <uses-feature name="Utility" required="true" />
+      <uses-feature name="WebAPI" required="true" />
+    </feature-usage>
+    -->
+  </control>
+</manifest>
