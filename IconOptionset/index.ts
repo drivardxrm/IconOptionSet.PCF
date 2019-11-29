@@ -11,7 +11,9 @@ export class IconOptionset implements ComponentFramework.StandardControl<IInputs
 	private _notifyOutputChanged:() => void;
 	private _container: HTMLDivElement;
 	private _props: IProps = { selected: undefined, 
-								icons: [],								
+								icons: [],
+								disabled:false,
+								nullable:false,								
 								selectedcolor:"", 
 								onChange : this.notifyChange.bind(this) };
 	
@@ -58,13 +60,21 @@ export class IconOptionset implements ComponentFramework.StandardControl<IInputs
 	 */
 	public updateView(context: ComponentFramework.Context<IInputs>): void
 	{
+		let isVisible = context.mode.isVisible
 		
+		// If the form is diabled because it is inactive or the user doesn't have access
+		// isControlDisabled is set to true
+		let isReadOnly = context.mode.isControlDisabled;
+		// When a field has FLS enabled, the security property on the attribute parameter is set
+		if (context.parameters.optionset.security) {
+			isReadOnly = isReadOnly || !context.parameters.optionset.security.editable;
+			isVisible = isVisible && context.parameters.optionset.security.readable;
+		}
 
-		// Add code to update control view
-		if (context.parameters.optionset.attributes == null) {
-            return;
-        }
-		
+		if(!isVisible || context.parameters.optionset.attributes == null){
+			return;
+		}
+
 		this._selected = context.parameters.optionset.raw || undefined;
 
 		let options:ComponentFramework.PropertyHelper.OptionMetadata[] 
@@ -79,6 +89,8 @@ export class IconOptionset implements ComponentFramework.StandardControl<IInputs
 		this._props.selected = this._selected;
 		this._props.icons = this.getIconSetups(options,icons);
 		this._props.selectedcolor = context.parameters.selectedcolor.raw || "";
+		this._props.disabled = isReadOnly
+		this._props.nullable = (context.parameters.allowempty.raw || "") == "true";
 
 		ReactDOM.render(
 			React.createElement(IconOptionsetControl, this._props)

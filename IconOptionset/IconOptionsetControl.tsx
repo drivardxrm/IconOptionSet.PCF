@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ChoiceGroup, IChoiceGroupOption } from 'office-ui-fabric-react/lib/ChoiceGroup';
+import { IconButton,IIconProps, ChoiceGroup, IChoiceGroupOption, Button , Stack} from 'office-ui-fabric-react';
 import { initializeIcons } from '@uifabric/icons';
 
 
@@ -7,6 +7,8 @@ import { initializeIcons } from '@uifabric/icons';
 export interface IProps {
     selected: number | undefined;
     icons: Array<IIconSetup>;
+    disabled: boolean;
+    nullable: boolean;
     
     selectedcolor: string | undefined;
     onChange: (selected:number|undefined) => void;
@@ -19,7 +21,7 @@ export interface IIconSetup {
 }
 
 export interface IState {
-    selectedvalue: string;
+    selectedvalue: string | undefined;
 }
 
 
@@ -29,8 +31,9 @@ export class IconOptionsetControl extends React.Component<IProps,IState> {
 
         initializeIcons();
         super(props);
-        this.state = { selectedvalue: (props.selected === undefined ? "" : props.selected.toString())};
+        this.state = { selectedvalue: (props.selected === undefined ? undefined : props.selected.toString())};
         this.onChange = this.onChange.bind(this);
+        this.onCancel = this.onCancel.bind(this);
 
     }
 
@@ -55,6 +58,15 @@ export class IconOptionsetControl extends React.Component<IProps,IState> {
         
     }
 
+    onCancel() {
+         
+        this.setState({selectedvalue: undefined});
+        this.props.onChange(undefined);   
+         
+    }
+
+    
+
     render() {
         
             
@@ -64,17 +76,18 @@ export class IconOptionsetControl extends React.Component<IProps,IState> {
             }
 
 
-            var options = this.props.icons.map(iconsetup=>getChoiceGroupOption(iconsetup,this.props.selectedcolor,this.state.selectedvalue))
+            var options = this.props.icons.map(iconsetup=>getChoiceGroupOption(iconsetup,this.props,this.state))
             
 
-            function getChoiceGroupOption(iconsetup:IIconSetup,selectedcolor:string|undefined, selectedvalue:string):IChoiceGroupOption{
+            function getChoiceGroupOption(iconsetup:IIconSetup, props:IProps, state:IState):IChoiceGroupOption{
                 let key:string = iconsetup.key.toString();
                 let choicegoupoption:IChoiceGroupOption = {key:key,
                                                             text:iconsetup.text,
+                                                            disabled: props.disabled,
                                                             iconProps:{
                                                                 iconName:iconsetup.icon,
                                                                 style:{
-                                                                    color:key==selectedvalue?selectedcolor:undefined
+                                                                    color:key==state.selectedvalue?props.selectedcolor:undefined
                                                                 }
                                                             }
                                                         };
@@ -82,14 +95,26 @@ export class IconOptionsetControl extends React.Component<IProps,IState> {
                 return choicegoupoption;
             }
 
+ 
+
             return (
+                <Stack horizontal>
+                    {this.props.nullable &&
+                        <IconButton 
+                            iconProps={{iconName:"Cancel"}}
+                            title="Cancel" 
+                            ariaLabel="Cancel" 
+                            onClick={this.onCancel}
+                        />
+                    }
+
+                    <ChoiceGroup
+                        selectedKey={this.state.selectedvalue}
+                        options = {options}
+                        onChange={this.onChange}
+                    />
+                </Stack>
                 
-                <ChoiceGroup
-                    selectedKey={this.state.selectedvalue}
-                    options = {options}
-                    
-                    onChange={this.onChange}
-                />
             );
     }
 
