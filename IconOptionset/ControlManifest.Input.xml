@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-  <control namespace="XrmVision" constructor="IconOptionset" version="1.0.3" display-name-key="Icon Optionset" description-key="Display an optionset with Office UI Fabric icons (5 values max)" control-type="standard">
+  <control namespace="XrmVision" constructor="IconOptionset" version="1.0.5" display-name-key="Icon Optionset" description-key="Display an optionset with Office UI Fabric icons (5 values max)" control-type="standard">
     <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
     <property name="optionset" display-name-key="Primary Optionset" description-key="Select Optionset (5 values max)" of-type="OptionSet" usage="bound" required="true" />
     <property name="icon1" display-name-key="Icon #1" description-key="Icon #1, list here  https://developer.microsoft.com/en-us/fabric#/styles/web/icons#fabric-icons-tool" of-type="SingleLine.Text" usage="input" required="false" default-value="EmojiDisappointed"/>
@@ -9,10 +9,7 @@
     <property name="icon4" display-name-key="Icon #4" description-key="Icon #4, list here  https://developer.microsoft.com/en-us/fabric#/styles/web/icons#fabric-icons-tool" of-type="SingleLine.Text" usage="input" required="false" default-value="Emoji2"/>
     <property name="icon5" display-name-key="Icon #5" description-key="Icon #5, list here  https://developer.microsoft.com/en-us/fabric#/styles/web/icons#fabric-icons-tool" of-type="SingleLine.Text" usage="input" required="false" default-value="Emoji"/>
     <property name="selectedcolor" display-name-key="Selected icon color" description-key="Selected icon color" of-type="SingleLine.Text" usage="input" required="false" default-value="#005A9E"/>
-    <property name="allowempty" display-name-key="Allow Empty" description-key="Select 'true' if empty value is allowed" of-type="Enum" usage="input" required="true">
-      <value name="true" display-name-key="true" description-key="true" default="true">true</value>
-      <value name="false" display-name-key="false" description-key="false">false</value>
-    </property>
+
     <!-- 
       Property node's of-type attribute can be of-type-group attribute. 
       Example:

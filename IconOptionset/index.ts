@@ -50,10 +50,6 @@ export class IconOptionset implements ComponentFramework.StandardControl<IInputs
 		this._notifyOutputChanged();
 	}
 
-	
-		  
-	 
-
 	/**
 	 * Called when any value in the property bag has changed. This includes field values, data-sets, global values such as container height and width, offline status, control metadata values such as label, visible, etc.
 	 * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to names defined in the manifest, as well as utility functions
@@ -90,7 +86,7 @@ export class IconOptionset implements ComponentFramework.StandardControl<IInputs
 		this._props.icons = this.getIconSetups(options,icons);
 		this._props.selectedcolor = context.parameters.selectedcolor.raw || "";
 		this._props.disabled = isReadOnly
-		this._props.nullable = (context.parameters.allowempty.raw || "") == "true";
+		this._props.nullable = true; //todo add as a parameter in mamnifest
 
 		ReactDOM.render(
 			React.createElement(IconOptionsetControl, this._props)
