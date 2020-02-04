@@ -2,7 +2,7 @@
 import {IInputs, IOutputs} from "./generated/ManifestTypes";
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { IconOptionsetControl, IProps, IIconSetup } from "./IconOptionsetControl";
+import  IconOptionsetControl, {IProps, IIconSetup } from "./IconOptionsetControl";
 
 export class IconOptionset implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 
@@ -12,7 +12,8 @@ export class IconOptionset implements ComponentFramework.StandardControl<IInputs
 	private _container: HTMLDivElement;
 	private _props: IProps = { selected: undefined, 
 								icons: [],
-								disabled:false,
+								readonly:false,
+								masked:false,
 								nullable:false,								
 								selectedcolor:"", 
 								onChange : this.notifyChange.bind(this) };
@@ -61,10 +62,13 @@ export class IconOptionset implements ComponentFramework.StandardControl<IInputs
 		// If the form is diabled because it is inactive or the user doesn't have access
 		// isControlDisabled is set to true
 		let isReadOnly = context.mode.isControlDisabled;
+
+		let isMasked = false;
 		// When a field has FLS enabled, the security property on the attribute parameter is set
 		if (context.parameters.optionset.security) {
 			isReadOnly = isReadOnly || !context.parameters.optionset.security.editable;
 			isVisible = isVisible && context.parameters.optionset.security.readable;
+			isMasked = isVisible && !context.parameters.optionset.security.readable
 		}
 
 		if(!isVisible || context.parameters.optionset.attributes == null){
@@ -85,7 +89,8 @@ export class IconOptionset implements ComponentFramework.StandardControl<IInputs
 		this._props.selected = this._selected;
 		this._props.icons = this.getIconSetups(options,icons);
 		this._props.selectedcolor = context.parameters.selectedcolor.raw || "";
-		this._props.disabled = isReadOnly
+		this._props.readonly = isReadOnly;
+		this._props.masked = isMasked;
 		this._props.nullable = true; //todo add as a parameter in mamnifest
 
 		ReactDOM.render(
