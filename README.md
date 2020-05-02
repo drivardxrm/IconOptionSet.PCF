@@ -22,11 +22,8 @@ office-ui-fabric-react : https://github.com/OfficeDev/office-ui-fabric-react
 ![alt text](https://github.com/drivardxrm/IconOptionSet.PCF/blob/master/iconoptionset.gif?raw=true)
 
 # Installation
-You can install the component directly with the provided files
-
-https://github.com/drivardxrm/IconOptionSet.PCF/blob/master/IconOptionSetPCF_1_0_0_0.zip  (Unmanaged solution)
-
-https://github.com/drivardxrm/IconOptionSet.PCF/blob/master/IconOptionSetPCF_1_0_0_0_managed.zip (Managed solution)
+You can install the component directly from solution files containes in the 'Release' section
+https://github.com/drivardxrm/IconOptionSet.PCF/releases
 
 # Get required tools
 
