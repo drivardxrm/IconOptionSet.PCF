@@ -74,8 +74,7 @@ export class IconOptionset implements ComponentFramework.StandardControl<IInputs
 		if(!isVisible || context.parameters.optionset.attributes == null){
 			return;
 		}
-
-		this._selected = context.parameters.optionset.raw || undefined;
+		this._selected = context.parameters.optionset.raw !== null ? context.parameters.optionset.raw : undefined;
 
 		let options:ComponentFramework.PropertyHelper.OptionMetadata[] 
 				= context.parameters.optionset.attributes.Options;
@@ -85,6 +84,7 @@ export class IconOptionset implements ComponentFramework.StandardControl<IInputs
 									context.parameters.icon3.raw || "",
 									context.parameters.icon4.raw || "",
 									context.parameters.icon5.raw || ""];
+		
 		
 		this._props.selected = this._selected;
 		this._props.icons = this.getIconSetups(options,icons);
@@ -97,6 +97,9 @@ export class IconOptionset implements ComponentFramework.StandardControl<IInputs
 			React.createElement(IconOptionsetControl, this._props)
 			, this._container
 		);
+
+		
+		
 	}
 
 	

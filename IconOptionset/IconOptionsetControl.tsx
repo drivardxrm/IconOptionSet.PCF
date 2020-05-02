@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { IconButton,IIconProps, ChoiceGroup, IChoiceGroupOption, Button , Stack} from 'office-ui-fabric-react';
-import { TextField} from "office-ui-fabric-react/lib/index"; 
-import { FontIcon} from "office-ui-fabric-react/lib/Icon";
-import { mergeStyles } from "office-ui-fabric-react/lib/Styling";
-import { initializeIcons } from '@uifabric/icons';
 import { useState, useEffect } from "react";
+
+import { initializeIcons, mergeStyles, FontIcon, TextField, IconButton,IIconProps, ChoiceGroup, IChoiceGroupOption, Button , Stack} from "@fluentui/react";
+import {useConst} from "@uifabric/react-hooks"
+
 
 
 export interface IProps {
@@ -33,18 +32,20 @@ const IconOptionsetControl = (props : IProps): JSX.Element => {
 
     //STATE VARIABLES
     const [selectedValue, setSelectedValue] = useState<string|undefined>(props.selected == undefined ? undefined : props.selected.toString());
-    const [options, setOptions] = useState<IChoiceGroupOption[]|undefined>(undefined);
-    const [cancelIconProps, setCancelIconProps] = useState<IIconProps|undefined>(undefined);
+    const [options, setOptions] = useState<IChoiceGroupOption[]>(() => {
+        return props.icons.map(iconsetup=>getChoiceGroupOption(iconsetup,props,selectedValue))
+    });
+    const [cancelIconProps, setCancelIconProps] = useState<IIconProps>(() => {
+        return {iconName:"Cancel"};
+    });
 
+
+    //-Initialization : will happen only once = like a contructor
+    useConst(() => {
+        initializeIcons();
+    });
 
     //EFFECT HOOKS
-    //-Initialization : will happen only once = like a contructor
-    useEffect(() => {
-        initializeIcons();
-        setOptions(props.icons.map(iconsetup=>getChoiceGroupOption(iconsetup,props,selectedValue)))
-        setCancelIconProps({iconName:"Cancel"});
-    }, []); 
-
     useEffect(() => {
     
         setSelectedValue(props.selected == undefined ? undefined : props.selected.toString());
@@ -69,10 +70,7 @@ const IconOptionsetControl = (props : IProps): JSX.Element => {
         setSelectedValue(undefined);
     }
 
-    if(props.icons.length > 5)
-    {
-        return <div>ERROR : this control is designed for 5 icons or less</div>
-    };
+    
 
     function getChoiceGroupOption(iconsetup:IIconSetup, props:IProps, selectedValue:string|undefined):IChoiceGroupOption {
         let key:string = iconsetup.key.toString();
@@ -101,7 +99,10 @@ const IconOptionsetControl = (props : IProps): JSX.Element => {
     });
 
     //RENDERING
-    if(props.masked){
+    if(props.icons.length > 5)
+    {
+        return <div>ERROR : this control is designed for 5 icons or less</div>
+    }else if(props.masked){
         return(
             <Stack tokens={{ childrenGap: 2 }} horizontal>
                 <FontIcon iconName="Lock" className={maskedclass} />     
@@ -133,99 +134,4 @@ const IconOptionsetControl = (props : IProps): JSX.Element => {
 }
 export default IconOptionsetControl;
 
-
-// export class IconOptionsetControl extends React.Component<IProps,IState> {
-
-//     constructor(props: Readonly<IProps>) {
-
-//         initializeIcons();
-//         super(props);
-//         this.state = { selectedvalue: (props.selected === undefined ? undefined : props.selected.toString())};
-//         this.onChange = this.onChange.bind(this);
-//         this.onCancel = this.onCancel.bind(this);
-
-//     }
-
-//     componentWillReceiveProps(props: IProps) {
-
-//         this.setState({selectedvalue : props.selected == undefined ? "" : props.selected.toString()});
-
-//     }
-
-    
-
-//     onChange(ev?: React.SyntheticEvent<HTMLElement>, option?: IChoiceGroupOption) {
-//         if(option != undefined)
-//         {
-            
-//             let selected = Number(option.key)
-
-//             this.setState({selectedvalue: option.key},)
-//             this.props.onChange(selected);
-            
-//         }
-        
-//     }
-
-//     onCancel() {
-         
-//         this.setState({selectedvalue: undefined});
-//         this.props.onChange(undefined);   
-         
-//     }
-
-    
-
-//     render() {
-        
-            
-//             if(this.props.icons.length > 5)
-//             {
-//                 return <div>ERROR : this control is designed for 5 icons or less</div>
-//             }
-
-
-//             var options = this.props.icons.map(iconsetup=>getChoiceGroupOption(iconsetup,this.props,this.state))
-            
-
-//             function getChoiceGroupOption(iconsetup:IIconSetup, props:IProps, state:IState):IChoiceGroupOption{
-//                 let key:string = iconsetup.key.toString();
-//                 let choicegoupoption:IChoiceGroupOption = {key:key,
-//                                                             text:iconsetup.text,
-//                                                             disabled: props.disabled,
-//                                                             iconProps:{
-//                                                                 iconName:iconsetup.icon,
-//                                                                 style:{
-//                                                                     color:key==state.selectedvalue?props.selectedcolor:undefined
-//                                                                 }
-//                                                             }
-//                                                         };
-                
-//                 return choicegoupoption;
-//             }
-
- 
-
-//             return (
-//                 <Stack horizontal>
-//                     {this.props.nullable &&
-//                         <IconButton 
-//                             iconProps={{iconName:"Cancel"}}
-//                             title="Cancel" 
-//                             ariaLabel="Cancel" 
-//                             onClick={this.onCancel}
-//                         />
-//                     }
-
-//                     <ChoiceGroup
-//                         selectedKey={this.state.selectedvalue}
-//                         options = {options}
-//                         onChange={this.onChange}
-//                     />
-//                 </Stack>
-                
-//             );
-//     }
-
-// }
 
