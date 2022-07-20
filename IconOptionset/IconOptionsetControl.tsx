@@ -1,10 +1,8 @@
 import * as React from 'react';
 import { useState, useEffect } from "react";
 
-import { initializeIcons, mergeStyles, FontIcon, TextField, IconButton,IIconProps, ChoiceGroup, IChoiceGroupOption, Button , Stack} from "@fluentui/react";
-import {useConst} from "@uifabric/react-hooks"
-
-
+import { initializeIcons, mergeStyles, FontIcon, TextField, IconButton,IIconProps, ChoiceGroup, IChoiceGroupOption, Stack} from "@fluentui/react";
+import { useConst } from '@uifabric/react-hooks';
 
 export interface IProps {
     selected: number | undefined;
