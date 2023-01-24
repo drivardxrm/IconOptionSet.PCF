@@ -1,10 +1,10 @@
 # IconOptionSet.PCF ![GitHub all releases](https://img.shields.io/github/downloads/drivardxrm/IconOptionSet.PCF/total?style=plastic)
-IconOptionset PCF (PowerApps Component framework) Control that turns a PowerApps optionset field into a configurable Office UI Fabric Choice group with Icons. Compatible with up to five options. Optionset labels are used as icon labels.
+IconOptionset PCF (PowerApps Component framework) Control that turns a PowerApps optionset field into a configurable FluentUI Choice group with Icons. Compatible with up to five options. Optionset labels are used as icon labels.
 
-Available icons here : https://developer.microsoft.com/en-us/fabric#/styles/web/icons#available-icons 
+Available icons here : https://developer.microsoft.com/en-us/fluentui#/styles/web/icons#available-icons 
 
 # Dependencies
-office-ui-fabric-react : https://github.com/OfficeDev/office-ui-fabric-react
+fluentui/react : https://github.com/microsoft/fluentui
 
 # Parameters
 | Parameter         | Description                                                                                  | Default     |
