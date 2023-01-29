@@ -1,24 +1,23 @@
-
 import {IInputs, IOutputs} from "./generated/ManifestTypes";
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import  IconOptionsetControl, {IProps, IIconSetup } from "./IconOptionsetControl";
+import  IconOptionsetControl, {IIconOptionsetProps, IIconSetup } from "./IconOptionsetControl";
+import { createRoot, Root } from 'react-dom/client';
+import { createElement } from 'react';
+
+
 
 export class IconOptionset implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 
+	private _root: Root;
 	private _selected: number | undefined;
-
 	private _notifyOutputChanged:() => void;
-	private _container: HTMLDivElement;
-	private _props: IProps = { selected: undefined, 
+	private _props: IIconOptionsetProps = { selected: undefined, 
 								icons: [],
 								readonly:false,
-								masked:false,
-								nullable:false,								
+								masked:false,							
 								selectedcolor:"", 
 								onChange : this.notifyChange.bind(this) };
 	
-	
+	//private _viewModel: IViewModel;
 	/**
 	 * Empty constructor.
 	 */
@@ -38,11 +37,9 @@ export class IconOptionset implements ComponentFramework.StandardControl<IInputs
 	public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container:HTMLDivElement)
 	{
 
-		// Add control initialization codeà
+		// Add control initialization code
 		this._notifyOutputChanged = notifyOutputChanged;
-		this._container = document.createElement("div");
-
-		container.appendChild(this._container);
+		this._root = createRoot(container!)
 	}
 
 	notifyChange(selected: number|undefined) {
@@ -73,6 +70,8 @@ export class IconOptionset implements ComponentFramework.StandardControl<IInputs
 			return;
 		}
 
+		
+
 		this._selected = context.parameters.optionset.raw !== null ? context.parameters.optionset.raw : undefined;
 
 		let options:ComponentFramework.PropertyHelper.OptionMetadata[] 
@@ -83,29 +82,17 @@ export class IconOptionset implements ComponentFramework.StandardControl<IInputs
 									context.parameters.icon3.raw || "",
 									context.parameters.icon4.raw || "",
 									context.parameters.icon5.raw || ""];
-		
+
 		//Prepare Props for React Component
 		this._props.selected = this._selected;
-		this._props.icons = this.getIconSetups(options,icons);
+		this._props.icons = options.map((option,index)=>this.getIconSetup(option,icons[index]));
 		this._props.selectedcolor = context.parameters.selectedcolor.raw || "";
 		this._props.readonly = isReadOnly;
 		this._props.masked = isMasked;
-		this._props.nullable = true; //todo add as a parameter in mamnifest
 
-		
-		ReactDOM.render(
-			React.createElement(IconOptionsetControl, this._props)
-			, this._container
-		);
+		// RENDER React Component
+		this._root.render(createElement(IconOptionsetControl, this._props)) 
 
-		
-		
-	}
-
-	
-	private getIconSetups(options:Array<ComponentFramework.PropertyHelper.OptionMetadata>, icons:Array<string>) : Array<IIconSetup>
-	{
-		return options.map((option,index)=>this.getIconSetup(option,icons[index]));
 	}
 
 	private getIconSetup(option:ComponentFramework.PropertyHelper.OptionMetadata, icon:string) : IIconSetup
@@ -132,5 +119,6 @@ export class IconOptionset implements ComponentFramework.StandardControl<IInputs
 	public destroy(): void
 	{
 		// Add code to cleanup control if necessary
+		this._root.unmount();
 	}
 }

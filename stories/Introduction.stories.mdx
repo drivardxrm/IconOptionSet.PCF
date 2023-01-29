@@ -1,0 +1,172 @@
+import { Meta } from '@storybook/addon-docs';
+import Code from './assets/code-brackets.svg';
+import Colors from './assets/colors.svg';
+import Comments from './assets/comments.svg';
+import Direction from './assets/direction.svg';
+import Flow from './assets/flow.svg';
+import Plugin from './assets/plugin.svg';
+import Repo from './assets/repo.svg';
+import StackAlt from './assets/stackalt.svg';
+
+<Meta title="Introduction" />
+
+<style>
+  {`
+    .subheading {
+      --mediumdark: '#999999';
+      font-weight: 900;
+      font-size: 13px;
+      color: #999;
+      letter-spacing: 6px;
+      line-height: 24px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      margin-top: 40px;
+    }
+
+    .link-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 1fr;
+      row-gap: 10px;
+    }
+
+    @media (min-width: 620px) {
+      .link-list {
+        row-gap: 20px;
+        column-gap: 20px;
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media all and (-ms-high-contrast:none) {
+    .link-list {
+        display: -ms-grid;
+        -ms-grid-columns: 1fr 1fr;
+        -ms-grid-rows: 1fr 1fr;
+      }
+    }
+
+    .link-item {
+      display: block;
+      padding: 20px 30px 20px 15px;
+      border: 1px solid #00000010;
+      border-radius: 5px;
+      transition: background 150ms ease-out, border 150ms ease-out, transform 150ms ease-out;
+      color: #333333;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .link-item:hover {
+      border-color: #1EA7FD50;
+      transform: translate3d(0, -3px, 0);
+      box-shadow: rgba(0, 0, 0, 0.08) 0 3px 10px 0;
+    }
+
+    .link-item:active {
+      border-color: #1EA7FD;
+      transform: translate3d(0, 0, 0);
+    }
+
+    .link-item strong {
+      font-weight: 700;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .link-item img {
+      height: 40px;
+      width: 40px;
+      margin-right: 15px;
+      flex: none;
+    }
+
+    .link-item span {
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .tip {
+      display: inline-block;
+      border-radius: 1em;
+      font-size: 11px;
+      line-height: 12px;
+      font-weight: 700;
+      background: #E7FDD8;
+      color: #66BF3C;
+      padding: 4px 12px;
+      margin-right: 10px;
+      vertical-align: top;
+    }
+
+    .tip-wrapper {
+      font-size: 13px;
+      line-height: 20px;
+      margin-top: 40px;
+      margin-bottom: 40px;
+    }
+
+    .tip-wrapper code {
+      font-size: 12px;
+      display: inline-block;
+    }
+  `}
+</style>
+
+# Icon Optionset PCF Storybook
+
+<br/>
+<br/>
+<img src="https://raw.githubusercontent.com/drivardxrm/IconOptionSet.PCF/master/iconoptionset.gif"></img>
+<br/>
+
+**IconOptionset PCF** Control that turns a PowerApps optionset field into a configurable FluentUI Choice group with Icons. Compatible with up to five options. Optionset labels are used as icon labels.
+
+## Download
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/drivardxrm/IconOptionSet.PCF)
+📦https://github.com/drivardxrm/IconOptionSet.PCF/releases/latest
+
+Available icons here : https://developer.microsoft.com/en-us/fluentui#/styles/web/icons#available-icons 
+
+## Parameters
+| Parameter         | Description                                                                                  | Default     |
+|-------------------|----------------------------------------------------------------------------------------------|----------   |
+| Primary Optionset  | Select Optionset (5 values max)                                                             |             |
+| Icon #1    | Name of icon #1, see Available icons link.                                                         | EmojiDisappointed|
+| Icon #2   | Name of icon #2, see Available icons link.                                                         | Sad   |
+| Icon #3    | Name of icon #3, see Available icons link.                                                        | EmojiNeutral     |
+| Icon #4   | Name of icon #4, see Available icons link.                                                              | Emoji2        |
+| Icon #5| Name of icon #5, see Available icons link.    | Emoji      |
+| Selected icon color| Color of selected icon.Supports literal (ex. blue, red) and RGBA color codes (ex. #da9494)   | #005A9E      |
+
+<div className="tip-wrapper">
+  <span className="tip">Tip</span>Browse example stories now by navigating to them in the sidebar.
+View their code in the <code>stories</code> directory to learn how they work.
+</div>
+<div className="subheading">Links</div>
+<div className="link-list">
+  <a
+    className="link-item"
+    href="https://github.com/drivardxrm/IconOptionSet.PCF"
+    target="_blank"
+  >
+  Github
+    <GitHub width={128} height={128} />
+    <span>
+      <strong>GitHub Repo</strong>
+      IconOptionSet.PCF
+    </span>
+  </a>
+  <a
+    className="link-item"
+    href="https://pcf.gallery/optionset-icons/"
+    target="_blank"
+  >
+    <img src="https://pcf.gallery/assets/images/logo.png" alt="PCF Gallery" />
+    <span>
+      <strong>PCF Gallery</strong>
+      IconOptionSet PCF
+    </span>
+  </a>
+</div> 

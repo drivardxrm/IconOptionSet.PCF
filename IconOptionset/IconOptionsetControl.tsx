@@ -1,18 +1,17 @@
 import * as React from 'react';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef,  useReducer } from "react";
 
-import { initializeIcons, mergeStyles, FontIcon, TextField, IconButton,IIconProps, ChoiceGroup, IChoiceGroupOption, Stack} from "@fluentui/react";
-import { useConst } from '@uifabric/react-hooks';
+import { initializeIcons, IIconProps, IconButton, Stack, ChoiceGroup, IChoiceGroupOption } from "@fluentui/react";
 
-export interface IProps {
+import { ChoiceGroupOptionStyles } from './Styles/ChoiceGroupOptionStyle';
+import MaskedInput from './MaskedInput';
+
+export interface IIconOptionsetProps {
     selected: number | undefined;
     icons: Array<IIconSetup>;
     readonly: boolean;
-    masked: boolean;
-    nullable: boolean;  
+    masked: boolean; 
     selectedcolor: string | undefined;
-    
-    
     onChange: (selected:number|undefined) => void;
 }
 
@@ -22,57 +21,50 @@ export interface IIconSetup {
     text: string;
 }
 
-export interface IState {
-    selectedvalue: string | undefined;
-}
+initializeIcons();
 
-const IconOptionsetControl = (props : IProps): JSX.Element => {
+// eslint-disable-next-line no-undef
+const IconOptionsetControl = (props : IIconOptionsetProps): JSX.Element => {
 
     //STATE VARIABLES
-    const [selectedValue, setSelectedValue] = useState<string|undefined>(props.selected == undefined ? undefined : props.selected.toString());
+    const [selectedValue, setSelectedValue] = useState<string|null>(props.selected == undefined ? null : props.selected.toString());
     const [options, setOptions] = useState<IChoiceGroupOption[]>(() => {
-        return props.icons.map(iconsetup=>getChoiceGroupOption(iconsetup,props,selectedValue))
-    });
-    const [cancelIconProps, setCancelIconProps] = useState<IIconProps>(() => {
-        return {iconName:"Cancel"};
+        return props.icons.map(iconsetup=>getChoiceGroupOption(iconsetup))
     });
 
+    const firstUpdate = useRef(true);
 
-    //-Initialization : will happen only once = like a contructor
-    useConst(() => {
-        initializeIcons();
-    });
-
-    //EFFECT HOOKS
+    // //EFFECT HOOKS
     useEffect(() => {
-    
-        setSelectedValue(props.selected == undefined ? undefined : props.selected.toString());
-        setOptions(props.icons.map(iconsetup=>getChoiceGroupOption(iconsetup,props,selectedValue)))
+        if (firstUpdate.current) { // skip on first update 
+            firstUpdate.current = false;
+             return;
+        }
+        let updatedValue = selectedValue == undefined ? undefined : Number(selectedValue)
+        props.onChange(updatedValue);
+        setOptions(props.icons.map(iconsetup=>getChoiceGroupOption(iconsetup)))
         
-    }, [props.selected]);
-
-
-    useEffect(() => {
-        selectedValue == undefined ? props.onChange(undefined) :
-                                    props.onChange(Number(selectedValue));       
     }, [selectedValue]);
 
-    const onChange=(ev?: React.SyntheticEvent<HTMLElement>, option?: IChoiceGroupOption) => {
+    useEffect(() => {
+        setSelectedValue(props.selected == undefined ? null : props.selected.toString());
+    }, [props.selected]);
+
+    const onChange=(ev?: React.SyntheticEvent<HTMLElement>, option?: IChoiceGroupOption) => { 
         if(option != undefined)
         {
             setSelectedValue(option.key);            
-        } 
+        }                         
     }
 
     const onCancel = () => {
-        setSelectedValue(undefined);
+        setSelectedValue(null)  
     }
 
-    
-
-    function getChoiceGroupOption(iconsetup:IIconSetup, props:IProps, selectedValue:string|undefined):IChoiceGroupOption {
+    function getChoiceGroupOption(iconsetup:IIconSetup):IChoiceGroupOption {
         let key:string = iconsetup.key.toString();
-        let choicegoupoption:IChoiceGroupOption = {key:key,
+        let choicegoupoption:IChoiceGroupOption = { styles: ChoiceGroupOptionStyles,
+                                                    key:key,
                                                     text:iconsetup.text,
                                                     disabled: props.readonly,
                                                     iconProps:{
@@ -88,29 +80,19 @@ const IconOptionsetControl = (props : IProps): JSX.Element => {
         return choicegoupoption;
     }
 
-    //STYLES
-    const maskedclass = mergeStyles({
-        fontSize: 30,
-        height: 30,
-        width: 50,
-        margin: "1px",      
-    });
+    const cancelIconProps:IIconProps = {iconName:"Cancel"}
 
-    //RENDERING
     if(props.icons.length > 5)
     {
         return <div>ERROR : this control is designed for 5 icons or less</div>
     }else if(props.masked){
         return(
-            <Stack tokens={{ childrenGap: 2 }} horizontal>
-                <FontIcon iconName="Lock" className={maskedclass} />     
-                <TextField value="*********" style={{width:"100%"}}/>
-            </Stack>
+            <MaskedInput/>
         )
     }else{
     return (
                 <Stack horizontal>
-                    {props.nullable &&
+                    {!props.readonly &&
                         <IconButton 
                             iconProps={cancelIconProps}
                             title="Cancel" 
