@@ -17,7 +17,6 @@ export class IconOptionset implements ComponentFramework.StandardControl<IInputs
 								selectedcolor:"", 
 								onChange : this.notifyChange.bind(this) };
 	
-	//private _viewModel: IViewModel;
 	/**
 	 * Empty constructor.
 	 */

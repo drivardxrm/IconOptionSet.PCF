@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-  <control namespace="DR" constructor="IconOptionset" version="1.0.16" display-name-key="Icon Optionset" description-key="Display an optionset with Office UI Fabric icons (5 values max)" control-type="standard" preview-image="img/iconoptionset-preview.png">
+  <control namespace="DR" constructor="IconOptionset" version="1.0.17" display-name-key="Icon Optionset" description-key="Display an optionset with Office UI Fabric icons (5 values max)" control-type="standard" preview-image="img/iconoptionset-preview.png">
     <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
     <property name="optionset" display-name-key="Primary Optionset" description-key="Select Optionset (5 values max)" of-type="OptionSet" usage="bound" required="true" />
     <property name="icon1" display-name-key="Icon #1" description-key="Icon #1, list here  https://developer.microsoft.com/en-us/fabric#/styles/web/icons#fabric-icons-tool" of-type="SingleLine.Text" usage="input" required="false" default-value="EmojiDisappointed"/>

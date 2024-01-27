@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect, useRef,  useReducer } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { initializeIcons, IIconProps, IconButton, Stack, ChoiceGroup, IChoiceGroupOption } from "@fluentui/react";
 
@@ -23,8 +23,8 @@ export interface IIconSetup {
 
 initializeIcons();
 
-// eslint-disable-next-line no-undef
-const IconOptionsetControl = (props : IIconOptionsetProps): JSX.Element => {
+
+const IconOptionsetControl = (props : IIconOptionsetProps): React.JSX.Element => {
 
     //STATE VARIABLES
     const [selectedValue, setSelectedValue] = useState<string|null>(props.selected == undefined ? null : props.selected.toString());
