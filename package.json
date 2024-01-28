@@ -27,6 +27,7 @@
     "@storybook/addon-interactions": "^7.6.10",
     "@storybook/addon-links": "^7.6.10",
     "@storybook/addon-docs": "^7.6.10",
+    "@storybook/addon-mdx-gfm": "^7.6.10",
     "@storybook/react": "^7.6.10",
     "@storybook/react-webpack5": "^7.6.10",
     "@storybook/testing-library": "0.0.13",
