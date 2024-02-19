@@ -12,7 +12,7 @@
     "deploy-storybook": "gh-pages -d storybook-static"
   },
   "dependencies": {
-    "@fluentui/react": "^8.115.1",
+    "@fluentui/react": "^8.115.2",
     "react": "^18",
     "react-dom": "^18"
   },
